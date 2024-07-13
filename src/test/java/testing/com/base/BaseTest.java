@@ -11,7 +11,10 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import testing.com.Actions.AssertActions;
 import testing.com.Modules.PayloadManager;
+import testing.com.Utils.PropertyReader;
 import testing.com.endpoints.APIConstants;
+
+import java.io.IOException;
 
 public class BaseTest {
 
@@ -27,11 +30,12 @@ public class BaseTest {
    public JsonPath jsonPath;
 
    @BeforeMethod(alwaysRun = true)
-    public void setConfig(){
+    public void setConfig() throws Exception {
        payloadManager= new PayloadManager();
        assertActions = new AssertActions();
        r= new RequestSpecBuilder()
-               .setBaseUri(APIConstants.BASE_URL)
+              .setBaseUri(APIConstants.BASE_URL)
+             /*  .setBaseUri(PropertyReader.readKey("url"))*/
                .addHeader("Content-Type", "Application/json")
                .build().log().all();
 
